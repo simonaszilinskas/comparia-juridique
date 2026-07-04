@@ -86,7 +86,8 @@ Cochez les ressources utilisées en remplaçant `[ ]` par `[x]`.
 - [x] `legiwatch-serveur-mcp-parlement` — Serveur MCP Parlement ✺ LegiWatch — utilisé indirectement (idem, Moulineuse en est un sur-ensemble strict)
 
 ### Galerie
-_Aucune image pour le moment._
+![Page d'accueil](images/accueil.png)
+![Sélecteur d'outils et de compétences juridiques](images/outils-et-competences.png)
 
 ### Documents
 - [Vidéo de démonstration](docs/demo.mp4)

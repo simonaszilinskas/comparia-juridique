@@ -87,6 +87,9 @@ export default defineConfig({
     'i-ri-bowl-line',
     'i-ri-music-2-line',
     'i-ri-book-open-line',
+    'i-ri-graduation-cap-line',
+    'i-ri-quill-pen-line',
+    'i-ri-scales-3-line',
     // cards
     'i-ri-stack-line',
     'i-ri-text-snippet',
