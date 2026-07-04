@@ -17,11 +17,10 @@
     if (!(locale in SUGGESTIONS)) return []
     let categories = [...SUGGESTIONS[locale as keyof typeof SUGGESTIONS]]
     if (locale === 'fr') {
-      const iasummit = categories.splice(
-        categories.findIndex((c) => c.icon === 'iasummit'),
-        1
-      )
-      return [iasummit[0], ...shuffleArray(categories)]
+      const iasummitIndex = categories.findIndex((c) => c.icon === 'iasummit')
+      if (iasummitIndex === -1) return shuffleArray(categories)
+      const [iasummit] = categories.splice(iasummitIndex, 1)
+      return [iasummit, ...shuffleArray(categories)]
     }
     return shuffleArray(categories)
   })

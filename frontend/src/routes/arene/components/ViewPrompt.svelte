@@ -1,12 +1,11 @@
 <script lang="ts">
-  import { Button, Toggle, Tooltip } from '$components/dsfr'
+  import { Button } from '$components/dsfr'
   import TextPrompt from '$components/TextPrompt.svelte'
   import type { APIModeAndPromptData } from '$lib/chatService.svelte'
   import { env as publicEnv } from '$env/dynamic/public'
   import { useLocalStorage } from '$lib/helpers/useLocalStorage.svelte'
   import { m } from '$lib/i18n/messages.js'
   import { getModelsContext } from '$lib/models'
-  import { sanitize } from '$lib/utils/commons'
   import { tick } from 'svelte'
   import { GuidedPromptSuggestions, ModelSelector, ToolsSelector } from '.'
 
@@ -35,7 +34,6 @@
     }
     return []
   })
-  let webSearch = $state(false)
   const enabledSkills = useLocalStorage<string[]>('enabledSkills', [])
   const enabledMcpServers = useLocalStorage<string[]>('enabledMcpServers', [])
 
@@ -61,7 +59,7 @@
       mode: mode.value,
       custom_models_selection: modelsSelection.value,
       prompt_value: prompt,
-      web_search: webSearch,
+      web_search: false,
       enabled_skills: isLegal ? enabledSkills.value : [],
       enabled_mcp_servers: isLegal ? enabledMcpServers.value : []
     })
@@ -135,31 +133,13 @@
           {models}
           disabled={loading}
         />
-        <Toggle
-          id="web-search"
-          bind:value={webSearch}
-          checkedLabel={m['arenaHome.webSearch.enabled']()}
-          uncheckedLabel={m['arenaHome.webSearch.disabled']()}
-          hideCheckLabel
-          labelPos="right"
-          class="font-medium w-full! text-[14px]!"
-          groupClass="grow my-auto"
-        >
-          {m['arenaHome.webSearch.label']()}
-          <Tooltip id="web-search-tooltip" size="sm" class="ms-1">
-            {@html sanitize(m['arenaHome.webSearch.tooltip']())}
-          </Tooltip>
-        </Toggle>
-      </div>
-
-      {#if isLegal}
-        <div class="md:col-span-full">
+        {#if isLegal}
           <ToolsSelector
             bind:enabledSkills={enabledSkills.value}
             bind:enabledMcpServers={enabledMcpServers.value}
           />
-        </div>
-      {/if}
+        {/if}
+      </div>
 
       <Button
         type="submit"

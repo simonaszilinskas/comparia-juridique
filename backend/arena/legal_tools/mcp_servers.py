@@ -92,4 +92,45 @@ AVAILABLE_MCP_SERVERS: dict[str, LocalMCPServer | RemoteMCPServer] = {
         ),
         url="https://mcp.lexbeam.com/mcp",
     ),
+    "droit_parlement": RemoteMCPServer(
+        id="droit_parlement",
+        label="Droit & Parlement (Tricoteuses)",
+        description=(
+            "Accès direct aux données juridiques et parlementaires "
+            "françaises : codes et lois consolidés, Journal officiel, "
+            "dossiers législatifs, amendements, comptes rendus de séance, "
+            "votes, questions au gouvernement, députés et sénateurs "
+            "(Assemblée nationale, Sénat, Légifrance). Recherche plein "
+            "texte et SQL en lecture seule sur ces sources. Serveur tiers "
+            "public, opéré par Tricoteuses/Code4code, sans authentification."
+        ),
+        url="https://mcp.code4code.eu/mcp",
+    ),
+    "jurisprudence": RemoteMCPServer(
+        id="jurisprudence",
+        label="Jurisprudence (JusticeLibre)",
+        description=(
+            "Recherche dans environ 3 millions de décisions de justice "
+            "françaises et européennes : Cour de cassation, Conseil d'État, "
+            "cours administratives d'appel, tribunaux administratifs, "
+            "Conseil constitutionnel, CEDH et CJUE, ainsi que les articles "
+            "de loi à une date donnée (versions historiques). Serveur "
+            "tiers public, opéré par JusticeLibre, sans authentification."
+        ),
+        url="https://justicelibre.org/mcp",
+    ),
+    "eu_law": RemoteMCPServer(
+        id="eu_law",
+        label="Droit de l'UE (EUR-Lex)",
+        description=(
+            "Accès au dépôt sémantique EUR-Lex (plus de 2,7 millions de "
+            "textes juridiques de l'Union européenne : règlements, "
+            "directives, traités, travaux préparatoires) et à la "
+            "jurisprudence de la CJUE et du Tribunal de l'UE. Recherche par "
+            "sujet (EuroVoc), par CELEX/ELI, et navigation des relations "
+            "entre textes (modifications, abrogations, consolidations). "
+            "Serveur tiers public, sans authentification."
+        ),
+        url="https://eur-lex.caseyjhand.com/mcp",
+    ),
 }

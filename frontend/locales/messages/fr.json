@@ -37,6 +37,8 @@
             "rateLimitCustomSelection": "Le choix de modèles est limité pour garantir un accès équitable à tous. Vous pouvez continuer à utiliser le mode aléatoire, ou réessayer plus tard."
         },
         "legalTools": {
+            "help": "Une fois activés, les outils et compétences sélectionnés sont proposés aux deux modèles comparés, qui restent libres de les utiliser ou non.",
+            "legend": "Outils et compétences juridiques",
             "mcpServers": {
                 "legend": "Outils"
             },

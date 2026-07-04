@@ -33,6 +33,8 @@
             "rateLimitCustomSelection": "Model selection is limited to ensure fair access for everyone. You can continue using random mode, or try again later."
         },
         "legalTools": {
+            "help": "Once enabled, the selected tools and skills are made available to both compared models, which remain free to use them or not.",
+            "legend": "Legal tools & skills",
             "mcpServers": {
                 "legend": "Tools"
             },
