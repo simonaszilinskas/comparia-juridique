@@ -151,6 +151,12 @@ async def bot_response_async(
     tool_rounds: list[dict] = []
     iterations = 0
 
+    # Tool rounds add reasoning + tool-call/result overhead on top of the
+    # final answer, making truncation before the model writes its actual
+    # content more likely at the default budget.
+    if tool_set is not None:
+        max_new_tokens = max(max_new_tokens, 24576)
+
     # When tools are enabled, route this whole turn through OpenRouter for
     # models we've verified support tool-calling there — more reliable than
     # these models' direct (mostly Scaleway) endpoints, whose tool-calling
@@ -271,8 +277,12 @@ async def bot_response_async(
     logger.debug(
         f"duration for {llm_msg.generation_id}: {duration}", extra={"request": request}
     )
-    # Check for empty responses and raise error (check on data that is not stripped)
-    if not llm_msg.content and not llm_msg.reasoning_content:
+    # Check for empty responses and raise error (check on data that is not stripped).
+    # A tool-using turn that ends with no visible content is broken even if
+    # reasoning_content is non-empty (e.g. truncated by max_tokens mid-thought
+    # right before writing the actual answer) — the user sees a trace and a
+    # reasoning accordion but no answer, with no indication anything failed.
+    if not llm_msg.content and (tool_rounds or not llm_msg.reasoning_content):
         logger.error(
             f"reponse_vide: {llm.id}, message: {llm_msg}",
             exc_info=True,
