@@ -273,16 +273,44 @@ async def bot_response_async(
     # Persist the tool-call trace, if any, on the final message
     llm_msg.tool_calls = tool_rounds or None
 
+    # A tool-using turn can end with no visible answer (the model stops
+    # right after tool use/reasoning without ever writing content — seen in
+    # practice even mid-budget, not just from truncation). Force one more
+    # completion with no tools offered so it must answer in plain text using
+    # the tool results already in call_messages, instead of failing the turn.
+    if tool_rounds and not llm_msg.content.strip():
+        logger.warning(
+            f"tool_turn_no_answer_retrying_without_tools: {llm.id}",
+            extra={"request": request},
+        )
+        llm_msg.tool_calls = None
+        retry_iter = litellm_stream_iter(
+            llm=llm,
+            messages=call_messages,
+            msg=llm_msg,
+            temperature=temperature,
+            max_new_tokens=max_new_tokens,
+            request=request,
+            tools=None,
+            endpoint_override=endpoint_override,
+        )
+        for llm_msg in retry_iter:
+            if llm_msg.content or llm_msg.reasoning_content:
+                yield llm_msg
+        llm_msg.tool_calls = tool_rounds
+
     duration = (llm_msg.updated_at - llm_msg.created_at).total_seconds()
     logger.debug(
         f"duration for {llm_msg.generation_id}: {duration}", extra={"request": request}
     )
-    # Check for empty responses and raise error (check on data that is not stripped).
-    # A tool-using turn that ends with no visible content is broken even if
-    # reasoning_content is non-empty (e.g. truncated by max_tokens mid-thought
-    # right before writing the actual answer) — the user sees a trace and a
-    # reasoning accordion but no answer, with no indication anything failed.
-    if not llm_msg.content and (tool_rounds or not llm_msg.reasoning_content):
+    # Check for empty responses and raise error. Stripped specifically for
+    # this check: a tool-using turn can end with content that is just
+    # whitespace (e.g. a trailing newline) — truthy in Python, so an
+    # unstripped check silently accepts it — while reasoning_content is
+    # non-empty (the model stopped right after "thinking" without ever
+    # writing a visible answer). The user then sees a trace and a reasoning
+    # accordion but no answer, with no indication anything failed.
+    if not llm_msg.content.strip() and (tool_rounds or not llm_msg.reasoning_content):
         logger.error(
             f"reponse_vide: {llm.id}, message: {llm_msg}",
             exc_info=True,
