@@ -91,6 +91,7 @@ Cochez les ressources utilisées en remplaçant `[ ]` par `[x]`.
 
 ### Documents
 - [Vidéo de démonstration](docs/demo.mp4)
+- [Plan de déploiement · stratégie d'acquisition d'évaluateurs juristes](docs/PLAN-DEPLOIEMENT.md) — un bonus produit en marge du défi
 
 ### URL de démonstration
 https://caddy-production-dab6.up.railway.app
