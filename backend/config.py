@@ -202,3 +202,9 @@ WEB_SEARCH_INTRO = "Here is some recent information from a web search. Use it to
 # Agentic legal tools/skills (compar:IA juridique only). The model decides
 # whether to use an enabled tool; it is never forced.
 MAX_TOOL_ITERATIONS = 4
+
+# Ranking is recomputed reactively after every decisive vote, but on a
+# low-traffic instance a quiet stretch can outlast the Redis cache's 24h TTL
+# and the leaderboard goes blank. This periodic recompute is a safety net,
+# independent of vote traffic, so it never lapses.
+RANKING_RECOMPUTE_INTERVAL_SECONDS = 6 * 3600
