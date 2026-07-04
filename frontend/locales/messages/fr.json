@@ -130,7 +130,9 @@
         "revealButton": "Terminer et découvrir les modèles",
         "toolCall": {
             "arguments": "Paramètres :",
-            "label": "A utilisé : {tools}",
+            "details": "Voir le détail de l'appel à l'outil",
+            "inProgress": "Utilise un outil : {tools}…",
+            "label": "A utilisé un outil : {tools}",
             "pending": "En attente du résultat…",
             "result": "Résultat :"
         },

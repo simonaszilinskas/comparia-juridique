@@ -47,6 +47,8 @@ export interface UserMessage {
 export interface ToolCallRecord {
   id: string
   name: string
+  // human-readable server label (e.g. "EU AI Act (Lawve)"), falls back to `name`
+  label: string | null
   arguments: string | null
   // null while the call is in flight, filled in once the tool returns
   result: string | null

@@ -125,7 +125,9 @@
         "revealButton": "Reveal the models",
         "toolCall": {
             "arguments": "Arguments:",
-            "label": "Used: {tools}",
+            "details": "View tool call details",
+            "inProgress": "Using a tool: {tools}…",
+            "label": "Used a tool: {tools}",
             "pending": "Waiting for result…",
             "result": "Result:"
         },

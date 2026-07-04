@@ -1,6 +1,6 @@
 <script lang="ts">
   import Copy from '$components/Copy.svelte'
-  import { Icon } from '$components/dsfr'
+  import { Badge, Icon } from '$components/dsfr'
   import Markdown from '$components/markdown/MarkdownCode.svelte'
   import Pending from '$components/Pending.svelte'
   import type {
@@ -36,6 +36,15 @@
     sub_annotations: turnSide.sub_annotations,
     custom_annotation: turnSide.custom_annotation
   })
+
+  const toolLabels = $derived(
+    message.tool_calls?.length
+      ? [...new Set(message.tool_calls.flatMap((r) => r.calls.map((c) => c.label || c.name)))]
+      : []
+  )
+  const toolCallsPending = $derived(
+    !!message.tool_calls?.some((r) => r.calls.some((c) => c.result === null))
+  )
 </script>
 
 <div class="md:w-full flex w-[80vw] flex-col">
@@ -56,7 +65,21 @@
     </div>
 
     <div class="px-4 overflow-scroll">
-      {#if message.tool_calls?.length}
+      {#if toolLabels.length}
+        <div class="mb-2">
+          <Badge
+            variant={toolCallsPending ? '' : 'info'}
+            class="inline-flex! items-center gap-1"
+          >
+            <Icon
+              icon={toolCallsPending ? 'i-ri-loader-4-line animate-spin' : 'i-ri-tools-fill'}
+              class="me-1"
+            />
+            {toolCallsPending
+              ? m['chatbot.toolCall.inProgress']({ tools: toolLabels.join(', ') })
+              : m['chatbot.toolCall.label']({ tools: toolLabels.join(', ') })}
+          </Badge>
+        </div>
         <section class="fr-accordion mb-8 py-2">
           <div class="fr-highlight ms-0! ps-0!">
             <h3 class="fr-accordion__title ms-1!">
@@ -66,12 +89,7 @@
                 aria-expanded="true"
                 aria-controls="tool-trace-{message.generation_id}"
               >
-                <Icon icon="i-ri-tools-line" class="text-primary me-1" />
-                {m['chatbot.toolCall.label']({
-                  tools: [
-                    ...new Set(message.tool_calls.flatMap((r) => r.calls.map((c) => c.name)))
-                  ].join(', ')
-                })}
+                {m['chatbot.toolCall.details']()}
               </button>
             </h3>
             <div
@@ -85,7 +103,7 @@
                   {/if}
                   {#each round.calls as call}
                     <div class="border-l-2 border-[--blue-france-main-525] pl-3">
-                      <p class="mb-1! font-medium">{call.name}</p>
+                      <p class="mb-1! font-medium">{call.label || call.name}</p>
                       {#if call.arguments}
                         <p class="mb-1!">
                           <span class="font-medium">{m['chatbot.toolCall.arguments']()}</span>

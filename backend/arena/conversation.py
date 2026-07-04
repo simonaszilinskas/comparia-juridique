@@ -219,6 +219,7 @@ async def bot_response_async(
             {
                 "id": call.get("id"),
                 "name": call["function"]["name"],
+                "label": tool_set.labels.get(call["function"]["name"]),
                 "arguments": call["function"].get("arguments"),
                 "result": None,
             }
