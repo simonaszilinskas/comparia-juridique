@@ -10,6 +10,11 @@
 
 :8080 {
 	handle /api/* {
+		# The frontend's SSR calls come back in here via caddy.railway.internal:8080,
+		# a different origin from the page, and SvelteKit refuses a cross-origin
+		# response with no Access-Control-Allow-Origin. Naming the site's own
+		# origin grants nothing same-origin does not already allow.
+		header Access-Control-Allow-Origin "https://{$RAILWAY_PUBLIC_DOMAIN}"
 		reverse_proxy backend.railway.internal:80
 	}
 
