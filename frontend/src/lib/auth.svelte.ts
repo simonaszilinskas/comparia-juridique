@@ -15,6 +15,11 @@ export {
   type AuthCtx,
   type AuthUser
 } from '$lib/authContext.svelte'
+import { tryGetAuthContext as tryGetAuth } from '$lib/authContext.svelte'
+
+export function isAdmin(): boolean {
+  return tryGetAuth()?.user?.role === 'admin'
+}
 
 export function userAllowed(auth: AuthCtx, role?: AuthUser['role']) {
   if (!role) return true

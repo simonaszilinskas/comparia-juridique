@@ -589,7 +589,8 @@
             "save": "Save",
             "signLabel": "Kind",
             "subtitle": "Add and manage the tags visitors attach to their vote.",
-            "title": "Vote tags"
+            "title": "Vote tags",
+            "tools": "Tools"
         }
     },
     "arenaHome": {
@@ -617,7 +618,16 @@
             "disabled": "Web search disabled",
             "enabled": "Web search enabled",
             "label": "Web search",
-            "tooltip": "Enable web search to let the models rely on online sources and cite more up-to-date information.<br><strong>Without web search</strong>, models answer based on what they learned during training (their training data). They can’t verify information online, so very recent or highly specific facts may be incomplete."
+            "tooltip": "Enable web search to let the models rely on online sources and cite more up-to-date information.<br><strong>Without web search</strong>, models answer based on what they learned during training (their training data). They can’t verify information online, so very recent or highly specific facts may be incomplete.",
+            "help": "Each model decides whether running a search would be useful."
+        },
+        "tools": {
+            "contract": "Once enabled, the selected tools are offered to both compared models, which remain free to use them or not.",
+            "count": "{count} tools",
+            "label": "Tools",
+            "legend": "Tools",
+            "locked": "Tools are fixed for the whole conversation.",
+            "none": "No tool"
         }
     },
     "arene": {
@@ -751,6 +761,32 @@
         "revealButton": "Finish and discover the models",
         "webSearch": {
             "label": "Associated Web search results."
+        },
+        "tools": {
+            "done": "Done",
+            "fixed": "Tools fixed for this conversation: {tools}",
+            "noResult": "No result",
+            "none": "No tool used",
+            "result": "1 result",
+            "results": "{count} results",
+            "running": "Searching…",
+            "sources": "{count} source(s)"
+        },
+        "agentTrace": {
+            "intermediate": "Intermediate model message",
+            "label": "View execution trace",
+            "query": "Search query: ",
+            "reasoning": "Reasoning shared by the model",
+            "request": "User request",
+            "sources": "source(s)",
+            "status": {
+                "empty": "No results",
+                "error": "Failed",
+                "success": "Successful"
+            },
+            "technicalDetails": "Show technical details",
+            "toolCall": "Tool call",
+            "toolResult": "Tool response"
         }
     },
     "closeModal": "Close the popup",
